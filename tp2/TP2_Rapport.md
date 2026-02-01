@@ -498,39 +498,6 @@ La loi de Gustafson est plus optimiste que celle d'Amdahl car elle suppose qu'on
 - Le choix dépend de la **distribution initiale des données** et des **besoins de l'application**
 - Les communications collectives MPI (`Allreduce`, `Allgather`) sont très optimisées
 
-### Partie 3 : Lois de performance
-
-- **Amdahl** : limite stricte basée sur la fraction séquentielle → utile pour évaluer le potentiel maximal
-- **Gustafson** : vision optimiste en augmentant la taille du problème → plus réaliste pour le HPC
-
-## Fichiers produits
-
-### Scripts Python
-
-| Fichier | Description |
-|---------|-------------|
-| `mandelbrot_block.py` | Partition par blocs |
-| `mandelbrot_cyclic.py` | Répartition cyclique |
-| `mandelbrot_master_slave.py` | Stratégie maître-esclave |
-| `matvec_col.py` | Produit par colonnes |
-| `matvec_row.py` | Produit par lignes |
-| `plot_results.py` | Script de visualisation des résultats |
-
-### Graphiques générés
-
-| Fichier | Description |
-|---------|-------------|
-| `plots/mandelbrot_speedup_comparison.png` | Comparaison des speedups |
-| `plots/mandelbrot_efficiency_comparison.png` | Comparaison des efficacités |
-| `plots/mandelbrot_execution_time.png` | Temps d'exécution |
-| `plots/load_balance_comparison_8proc.png` | Équilibrage de charge |
-
-### Images Mandelbrot
-
-| Fichier | Description |
-|---------|-------------|
-| `mandelbrot_*_Np.png` | Images générées par chaque stratégie |
-
 ---
 
 ## Annexe : Graphiques de performance
