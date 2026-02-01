@@ -1,0 +1,122 @@
+# Travaux Dirigés - OS02 Parallélisme
+
+**Auteur :** LIANG Tianyi  
+**Cours :** OS02 - Calcul Parallèle et Distribué  
+**Établissement :** ENSTA Paris  
+**Année :** 2025-2026
+
+---
+
+## 📋 Table des matières
+
+| TP | Thème | Technologies | Rapport |
+|:--:|-------|--------------|---------|
+| [TP1](tp1/) | Produit matrice-matrice & Parallélisation OpenMP | C++, OpenMP, BLAS | [TP1_Rapport.md](tp1/TP1_Rapport.md) |
+| [TP2](tp2/) | Parallélisation MPI : Mandelbrot & Produit matrice-vecteur | Python, MPI, mpi4py | [TP2_Rapport.md](tp2/TP2_Rapport.md) |
+
+---
+
+## 📁 Structure des dossiers
+
+```
+travaux_diriges/
+├── README.md                    # Ce fichier (index principal)
+├── tp1/
+│   ├── TP1_Rapport.md          # Rapport complet TP1
+│   ├── Sujet.pdf               # Énoncé du TP1
+│   ├── sources/                # Code source C++
+│   │   ├── ProdMatMat.cpp      # Produit matrice-matrice optimisé
+│   │   ├── Matrix.hpp          # Classe matrice
+│   │   ├── TestProductMatrix.cpp
+│   │   └── ...
+│   └── solution/               # Solutions additionnelles
+│       ├── jeton_anneau.py     # Circulation de jeton MPI
+│       └── calcul_pi.cpp       # Calcul de π parallèle
+│
+└── tp2/
+    ├── TP2_Rapport.md          # Rapport complet TP2
+    ├── Readme.md               # Énoncé du TP2
+    ├── mandelbrot_block.py     # Stratégie partition par blocs
+    ├── mandelbrot_cyclic.py    # Stratégie répartition cyclique
+    ├── mandelbrot_master_slave.py # Stratégie maître-esclave
+    ├── matvec_col.py           # Produit matrice-vecteur par colonnes
+    ├── matvec_row.py           # Produit matrice-vecteur par lignes
+    ├── plot_results.py         # Génération des graphiques
+    ├── run_all_tp2_experiments.sh # Script d'automatisation
+    ├── images/                 # Images Mandelbrot générées
+    ├── plots/                  # Graphiques de performance
+    └── results/                # Résultats expérimentaux
+```
+
+---
+
+## 📖 Résumé des TPs
+
+### TP1 : Produit Matrice-Matrice et OpenMP
+
+**Objectifs :**
+- Comprendre l'impact de l'ordre des boucles sur les performances (cache)
+- Optimiser avec la technique de blocking
+- Comparer avec la bibliothèque BLAS optimisée
+- Paralléliser avec OpenMP
+
+**Résultats clés :**
+- L'ordre `ikj` est optimal (accès mémoire contigus)
+- Le blocking améliore les performances de ~15%
+- OpenMP atteint une efficacité de ~85% sur 4 threads
+- BLAS surpasse toutes les implémentations manuelles (3200 GFLOPS vs 200 GFLOPS)
+
+### TP2 : Parallélisation MPI
+
+**Objectifs :**
+- Paralléliser le calcul de l'ensemble de Mandelbrot avec 3 stratégies
+- Implémenter le produit matrice-vecteur distribué
+- Analyser les lois d'Amdahl et Gustafson
+
+**Résultats clés :**
+- **Partition par blocs** : Speedup 5.31× avec 8 processus (efficacité 66%)
+- **Répartition cyclique** : Speedup 6.10× (efficacité 76%) - meilleur équilibrage
+- **Maître-esclave** : Efficacité 82% - meilleure adaptation à la charge
+- Le déséquilibre de charge vient de la complexité variable du calcul Mandelbrot
+
+---
+
+## 🛠️ Environnement de développement
+
+### TP1 (C++/OpenMP)
+```bash
+# Compilation
+make all
+
+# Exécution
+./TestProductMatrix.exe 1024
+```
+
+### TP2 (Python/MPI)
+```bash
+# Installation des dépendances
+pip install numpy mpi4py pillow matplotlib
+
+# Exécution MPI
+mpirun -np 4 python3 mandelbrot_block.py
+```
+
+---
+
+## 📊 Résultats expérimentaux
+
+Les résultats détaillés sont disponibles dans chaque rapport :
+- [Résultats TP1](tp1/TP1_Rapport.md#résultats)
+- [Résultats TP2](tp2/TP2_Rapport.md#résultats-expérimentaux)
+
+---
+
+## 📚 Références
+
+- Support de cours : [transparents/](../transparents/)
+- Exemples MPI : [Exemples/MPI/](../Exemples/MPI/)
+- Documentation MPI : https://mpi4py.readthedocs.io/
+
+---
+
+*Dernière mise à jour : Janvier 2026*

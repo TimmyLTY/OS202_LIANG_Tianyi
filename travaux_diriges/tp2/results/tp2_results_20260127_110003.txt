@@ -1,0 +1,271 @@
+========================================
+TP2 - Résultats des expériences
+Date: Tue Jan 27 11:00:03 CET 2026
+========================================
+
+########################################
+# PARTIE 1 : ENSEMBLE DE MANDELBROT   #
+########################################
+
+--- 1.0 Version séquentielle (référence) ---
+Temps du calcul de l'ensemble de Mandelbrot : 1.2894492149353027
+Temps de constitution de l'image : 0.004160642623901367
+
+--- 1.1 Partition par blocs de lignes ---
+>>> mpirun -np 1 <<<
+Processus 0/1: lignes 0 à 1023 (1024 lignes)
+Processus 0: temps de calcul local = 1.3116s
+
+=== Résultats (1 processus) ===
+Temps de calcul maximum: 1.3116s
+Temps de constitution de l'image: 0.0023s
+Image sauvegardée: mandelbrot_block_1p.png
+
+>>> mpirun -np 2 <<<
+Processus 1/2: lignes 512 à 1023 (512 lignes)
+Processus 0/2: lignes 0 à 511 (512 lignes)
+Processus 1: temps de calcul local = 0.6845s
+Processus 0: temps de calcul local = 0.7083s
+
+=== Résultats (2 processus) ===
+Temps de calcul maximum: 0.7083s
+Temps de constitution de l'image: 0.0013s
+Image sauvegardée: mandelbrot_block_2p.png
+
+>>> mpirun -np 4 <<<
+Processus 3/4: lignes 768 à 1023 (256 lignes)
+Processus 2/4: lignes 512 à 767 (256 lignes)
+Processus 1/4: lignes 256 à 511 (256 lignes)
+Processus 0/4: lignes 0 à 255 (256 lignes)
+Processus 2: temps de calcul local = 0.3613s
+Processus 1: temps de calcul local = 0.3775s
+Processus 3: temps de calcul local = 0.4095s
+Processus 0: temps de calcul local = 0.4153s
+
+=== Résultats (4 processus) ===
+Temps de calcul maximum: 0.4153s
+Temps de constitution de l'image: 0.0019s
+Image sauvegardée: mandelbrot_block_4p.png
+
+>>> mpirun -np 8 <<<
+Processus 3/8: lignes 384 à 511 (128 lignes)
+Processus 4/8: lignes 512 à 639 (128 lignes)
+Processus 1/8: lignes 128 à 255 (128 lignes)
+Processus 0/8: lignes 0 à 127 (128 lignes)
+Processus 5/8: lignes 640 à 767 (128 lignes)
+Processus 2/8: lignes 256 à 383 (128 lignes)
+Processus 6/8: lignes 768 à 895 (128 lignes)
+Processus 7/8: lignes 896 à 1023 (128 lignes)
+Processus 3: temps de calcul local = 0.1624s
+Processus 4: temps de calcul local = 0.1615s
+Processus 2: temps de calcul local = 0.1723s
+Processus 0: temps de calcul local = 0.1796s
+Processus 7: temps de calcul local = 0.1807s
+Processus 5: temps de calcul local = 0.1974s
+Processus 6: temps de calcul local = 0.2084s
+Processus 1: temps de calcul local = 0.2466s
+
+=== Résultats (8 processus) ===
+Temps de calcul maximum: 0.2466s
+Temps de constitution de l'image: 0.0020s
+Image sauvegardée: mandelbrot_block_8p.png
+
+--- 1.2 Répartition cyclique ---
+>>> mpirun -np 1 <<<
+Processus 0/1: 1024 lignes (première: 0, dernière: 1023)
+Processus 0: temps de calcul local = 1.2799s
+
+=== Résultats Cyclique (1 processus) ===
+Temps de calcul maximum: 1.2799s
+Temps de constitution de l'image: 0.0032s
+Image sauvegardée: mandelbrot_cyclic_1p.png
+
+>>> mpirun -np 2 <<<
+Processus 0/2: 512 lignes (première: 0, dernière: 1022)
+Processus 1/2: 512 lignes (première: 1, dernière: 1023)
+Processus 1: temps de calcul local = 0.6555s
+Processus 0: temps de calcul local = 0.6983s
+
+=== Résultats Cyclique (2 processus) ===
+Temps de calcul maximum: 0.6983s
+Temps de constitution de l'image: 0.0018s
+Image sauvegardée: mandelbrot_cyclic_2p.png
+
+>>> mpirun -np 4 <<<
+Processus 2/4: 256 lignes (première: 2, dernière: 1022)
+Processus 1/4: 256 lignes (première: 1, dernière: 1021)
+Processus 3/4: 256 lignes (première: 3, dernière: 1023)
+Processus 0/4: 256 lignes (première: 0, dernière: 1020)
+Processus 1: temps de calcul local = 0.3476s
+Processus 3: temps de calcul local = 0.3525s
+Processus 2: temps de calcul local = 0.3617s
+Processus 0: temps de calcul local = 0.3559s
+
+=== Résultats Cyclique (4 processus) ===
+Temps de calcul maximum: 0.3617s
+Temps de constitution de l'image: 0.0020s
+Image sauvegardée: mandelbrot_cyclic_4p.png
+
+>>> mpirun -np 8 <<<
+Processus 5/8: 128 lignes (première: 5, dernière: 1021)
+Processus 4/8: 128 lignes (première: 4, dernière: 1020)
+Processus 0/8: 128 lignes (première: 0, dernière: 1016)
+Processus 7/8: 128 lignes (première: 7, dernière: 1023)
+Processus 6/8: 128 lignes (première: 6, dernière: 1022)
+Processus 3/8: 128 lignes (première: 3, dernière: 1019)
+Processus 2/8: 128 lignes (première: 2, dernière: 1018)
+Processus 1/8: 128 lignes (première: 1, dernière: 1017)
+Processus 4: temps de calcul local = 0.1746s
+Processus 5: temps de calcul local = 0.1832s
+Processus 0: temps de calcul local = 0.1841s
+Processus 6: temps de calcul local = 0.1784s
+Processus 7: temps de calcul local = 0.1811s
+Processus 3: temps de calcul local = 0.1823s
+Processus 2: temps de calcul local = 0.2102s
+Processus 1: temps de calcul local = 0.2045s
+
+=== Résultats Cyclique (8 processus) ===
+Temps de calcul maximum: 0.2102s
+Temps de constitution de l'image: 0.0024s
+Image sauvegardée: mandelbrot_cyclic_8p.png
+
+--- 1.3 Stratégie Maître-Esclave ---
+>>> mpirun -np 2 <<<
+
+=== Résultats Maître-Esclave (2 processus, 1 esclaves) ===
+Temps de calcul total: 1.2694s
+Esclave 1: 1024 lignes calculées
+Temps de constitution de l'image: 0.0018s
+Image sauvegardée: mandelbrot_master_slave_2p.png
+
+>>> mpirun -np 4 <<<
+Esclave 1: 334 lignes calculées
+Esclave 3: 340 lignes calculées
+Esclave 2: 350 lignes calculées
+
+=== Résultats Maître-Esclave (4 processus, 3 esclaves) ===
+Temps de calcul total: 0.4526s
+Temps de constitution de l'image: 0.0020s
+Image sauvegardée: mandelbrot_master_slave_4p.png
+
+>>> mpirun -np 8 <<<
+Esclave 3: 154 lignes calculées
+Esclave 6: 155 lignes calculées
+Esclave 1: 139 lignes calculées
+Esclave 2: 154 lignes calculées
+Esclave 5: 119 lignes calculées
+Esclave 4: 134 lignes calculées
+
+=== Résultats Maître-Esclave (8 processus, 7 esclaves) ===
+Temps de calcul total: 0.2242s
+Esclave 7: 169 lignes calculées
+Temps de constitution de l'image: 0.0031s
+Image sauvegardée: mandelbrot_master_slave_8p.png
+
+
+########################################
+# PARTIE 2 : PRODUIT MATRICE-VECTEUR  #
+########################################
+
+--- 2.a Découpage par colonnes ---
+>>> mpirun -np 1 <<<
+=== Produit Matrice-Vecteur par Colonnes ===
+Dimension: 1200, Processus: 1, Colonnes par processus: 1200
+
+=== Résultats (1 processus, découpage par colonnes) ===
+Temps de calcul maximum: 0.011433s
+Premiers éléments de v: [5.767202e+08 5.760008e+08 5.752826e+08 5.745656e+08 5.738498e+08]
+Derniers éléments de v: [5.731352e+08 5.738498e+08 5.745656e+08 5.752826e+08 5.760008e+08]
+Erreur maximale vs séquentiel: 0.0
+✓ Résultat correct!
+✓ Tous les processus ont le même résultat
+
+>>> mpirun -np 2 <<<
+=== Produit Matrice-Vecteur par Colonnes ===
+Dimension: 1200, Processus: 2, Colonnes par processus: 600
+
+=== Résultats (2 processus, découpage par colonnes) ===
+Temps de calcul maximum: 0.008351s
+Premiers éléments de v: [5.767202e+08 5.760008e+08 5.752826e+08 5.745656e+08 5.738498e+08]
+Derniers éléments de v: [5.731352e+08 5.738498e+08 5.745656e+08 5.752826e+08 5.760008e+08]
+Erreur maximale vs séquentiel: 0.0
+✓ Résultat correct!
+✓ Tous les processus ont le même résultat
+
+>>> mpirun -np 4 <<<
+=== Produit Matrice-Vecteur par Colonnes ===
+Dimension: 1200, Processus: 4, Colonnes par processus: 300
+
+=== Résultats (4 processus, découpage par colonnes) ===
+Temps de calcul maximum: 0.000094s
+Premiers éléments de v: [5.767202e+08 5.760008e+08 5.752826e+08 5.745656e+08 5.738498e+08]
+Derniers éléments de v: [5.731352e+08 5.738498e+08 5.745656e+08 5.752826e+08 5.760008e+08]
+Erreur maximale vs séquentiel: 0.0
+✓ Résultat correct!
+✓ Tous les processus ont le même résultat
+
+>>> mpirun -np 8 <<<
+=== Produit Matrice-Vecteur par Colonnes ===
+Dimension: 1200, Processus: 8, Colonnes par processus: 150
+
+=== Résultats (8 processus, découpage par colonnes) ===
+Temps de calcul maximum: 0.000070s
+Premiers éléments de v: [5.767202e+08 5.760008e+08 5.752826e+08 5.745656e+08 5.738498e+08]
+Derniers éléments de v: [5.731352e+08 5.738498e+08 5.745656e+08 5.752826e+08 5.760008e+08]
+Erreur maximale vs séquentiel: 0.0
+✓ Résultat correct!
+✓ Tous les processus ont le même résultat
+
+--- 2.b Découpage par lignes ---
+>>> mpirun -np 1 <<<
+=== Produit Matrice-Vecteur par Lignes ===
+Dimension: 1200, Processus: 1, Lignes par processus: 1200
+
+=== Résultats (1 processus, découpage par lignes) ===
+Temps de calcul maximum: 0.010259s
+Premiers éléments de v: [5.767202e+08 5.760008e+08 5.752826e+08 5.745656e+08 5.738498e+08]
+Derniers éléments de v: [5.731352e+08 5.738498e+08 5.745656e+08 5.752826e+08 5.760008e+08]
+Erreur maximale vs séquentiel: 0.0
+✓ Résultat correct!
+✓ Tous les processus ont le même résultat
+
+>>> mpirun -np 2 <<<
+=== Produit Matrice-Vecteur par Lignes ===
+Dimension: 1200, Processus: 2, Lignes par processus: 600
+
+=== Résultats (2 processus, découpage par lignes) ===
+Temps de calcul maximum: 0.013963s
+Premiers éléments de v: [5.767202e+08 5.760008e+08 5.752826e+08 5.745656e+08 5.738498e+08]
+Derniers éléments de v: [5.731352e+08 5.738498e+08 5.745656e+08 5.752826e+08 5.760008e+08]
+Erreur maximale vs séquentiel: 0.0
+✓ Résultat correct!
+✓ Tous les processus ont le même résultat
+
+>>> mpirun -np 4 <<<
+=== Produit Matrice-Vecteur par Lignes ===
+Dimension: 1200, Processus: 4, Lignes par processus: 300
+
+=== Résultats (4 processus, découpage par lignes) ===
+Temps de calcul maximum: 0.000092s
+Premiers éléments de v: [5.767202e+08 5.760008e+08 5.752826e+08 5.745656e+08 5.738498e+08]
+Derniers éléments de v: [5.731352e+08 5.738498e+08 5.745656e+08 5.752826e+08 5.760008e+08]
+Erreur maximale vs séquentiel: 0.0
+✓ Résultat correct!
+✓ Tous les processus ont le même résultat
+
+>>> mpirun -np 8 <<<
+=== Produit Matrice-Vecteur par Lignes ===
+Dimension: 1200, Processus: 8, Lignes par processus: 150
+
+=== Résultats (8 processus, découpage par lignes) ===
+Temps de calcul maximum: 0.000092s
+Premiers éléments de v: [5.767202e+08 5.760008e+08 5.752826e+08 5.745656e+08 5.738498e+08]
+Derniers éléments de v: [5.731352e+08 5.738498e+08 5.745656e+08 5.752826e+08 5.760008e+08]
+Erreur maximale vs séquentiel: 0.0
+✓ Résultat correct!
+✓ Tous les processus ont le même résultat
+
+
+========================================
+Expériences terminées!
+========================================
