@@ -13,6 +13,7 @@
 |:--:|-------|--------------|---------|
 | [TP1](tp1/) | Produit matrice-matrice & Parallélisation OpenMP | C++, OpenMP, BLAS | [TP1_Rapport.md](tp1/TP1_Rapport.md) |
 | [TP2](tp2/) | Parallélisation MPI : Mandelbrot & Produit matrice-vecteur | Python, MPI, mpi4py | [TP2_Rapport.md](tp2/TP2_Rapport.md) |
+| [TP3](tp3/) | Bucket Sort Parallèle avec MPI | C++, MPI | [TP3_Rapport.md](tp3/TP3_Rapport.md) |
 
 ---
 
@@ -33,19 +34,30 @@ travaux_diriges/
 │       ├── jeton_anneau.py     # Circulation de jeton MPI
 │       └── calcul_pi.cpp       # Calcul de π parallèle
 │
-└── tp2/
-    ├── TP2_Rapport.md          # Rapport complet TP2
-    ├── Readme.md               # Énoncé du TP2
-    ├── mandelbrot_block.py     # Stratégie partition par blocs
-    ├── mandelbrot_cyclic.py    # Stratégie répartition cyclique
-    ├── mandelbrot_master_slave.py # Stratégie maître-esclave
-    ├── matvec_col.py           # Produit matrice-vecteur par colonnes
-    ├── matvec_row.py           # Produit matrice-vecteur par lignes
-    ├── plot_results.py         # Génération des graphiques
-    ├── run_all_tp2_experiments.sh # Script d'automatisation
-    ├── images/                 # Images Mandelbrot générées
-    ├── plots/                  # Graphiques de performance
-    └── results/                # Résultats expérimentaux
+├── tp2/
+│   ├── TP2_Rapport.md          # Rapport complet TP2
+│   ├── Readme.md               # Énoncé du TP2
+│   ├── mandelbrot_block.py     # Stratégie partition par blocs
+│   ├── mandelbrot_cyclic.py    # Stratégie répartition cyclique
+│   ├── mandelbrot_master_slave.py # Stratégie maître-esclave
+│   ├── matvec_col.py           # Produit matrice-vecteur par colonnes
+│   ├── matvec_row.py           # Produit matrice-vecteur par lignes
+│   ├── plot_results.py         # Génération des graphiques
+│   ├── run_all_tp2_experiments.sh # Script d'automatisation
+│   ├── images/                 # Images Mandelbrot générées
+│   ├── plots/                  # Graphiques de performance
+│   └── results/                # Résultats expérimentaux
+│
+└── tp3/
+    ├── TP3_Rapport.md          # Rapport complet TP3
+    ├── README.md               # Énoncé et instructions
+    ├── sources/                # Code source C++
+    │   ├── bucket_sort_seq.cpp     # Version séquentielle
+    │   ├── bucket_sort_mpi.cpp     # Version parallèle MPI
+    │   ├── Makefile                # Compilation
+    │   └── run_experiments.sh      # Script d'automatisation
+    ├── results/                # Résultats expérimentaux
+    └── images/                 # Illustrations du cours
 ```
 
 ---
@@ -79,6 +91,19 @@ travaux_diriges/
 - **Maître-esclave** : Efficacité 82% - meilleure adaptation à la charge
 - Le déséquilibre de charge vient de la complexité variable du calcul Mandelbrot
 
+### TP3 : Bucket Sort Parallèle
+
+**Objectifs :**
+- Implémenter l'algorithme Bucket Sort parallèle avec MPI
+- Utiliser l'approche Sample Sort pour l'équilibrage de charge
+- Maîtriser les communications All-to-All
+
+**Points clés :**
+- **Sample Sort** : Échantillonnage pour définir des frontières de buckets équilibrées
+- Utilisation de `MPI_Scatterv`, `MPI_Alltoallv`, `MPI_Gatherv`
+- **Merge k-way** avec heap pour fusionner les listes triées
+- Analyse de performance et scalabilité
+
 ---
 
 ## 🛠️ Environnement de développement
@@ -101,6 +126,18 @@ pip install numpy mpi4py pillow matplotlib
 mpirun -np 4 python3 mandelbrot_block.py
 ```
 
+### TP3 (C++/MPI)
+```bash
+cd tp3/sources
+
+# Compilation
+make all
+
+# Exécution
+./bucket_sort_seq.exe 1000000                    # Version séquentielle
+mpirun -np 4 ./bucket_sort_mpi.exe 1000000       # Version parallèle
+```
+
 ---
 
 ## 📊 Résultats expérimentaux
@@ -108,6 +145,7 @@ mpirun -np 4 python3 mandelbrot_block.py
 Les résultats détaillés sont disponibles dans chaque rapport :
 - [Résultats TP1](tp1/TP1_Rapport.md#résultats)
 - [Résultats TP2](tp2/TP2_Rapport.md#résultats-expérimentaux)
+- [Résultats TP3](tp3/TP3_Rapport.md#résultats-expérimentaux)
 
 ---
 
