@@ -15,6 +15,7 @@
 | [TP2](tp2/) | Parallélisation MPI : Mandelbrot & Produit matrice-vecteur | Python, MPI, mpi4py | [TP2_Rapport.md](tp2/TP2_Rapport.md) |
 | [TP3](tp3/) | Bucket Sort Parallèle avec MPI | C++, MPI | [TP3_Rapport.md](tp3/TP3_Rapport.md) |
 | [TP4](tp4/) | Jeu de la Vie — Parallélisation MPI | Python, MPI, mpi4py, pygame | [TP4_Rapport.md](tp4/TP4_Rapport.md) |
+| [TP5](tp5/) | Calcul GPU avec PyCUDA | Python, PyCUDA, CUDA, Google Colab | [TP5_Rapport.md](tp5/TP5_Rapport.md) |
 
 ---
 
@@ -60,12 +61,18 @@ travaux_diriges/
 │   ├── results/                # Résultats expérimentaux
 │   └── images/                 # Illustrations du cours
 │
-└── tp4/
-    ├── TP4_Rapport.md          # Rapport complet TP4
-    ├── game_of_life.py         # Jeu de la Vie parallèle (MPI)
-    ├── game_of_life_parallel.py # Copie identique
-    ├── benchmark_headless.py   # Benchmark sans affichage
-    └── benchmark_results.csv   # Résultats expérimentaux
+├── tp4/
+│   ├── TP4_Rapport.md          # Rapport complet TP4
+│   ├── game_of_life.py         # Jeu de la Vie parallèle (MPI)
+│   ├── game_of_life_parallel.py # Copie identique
+│   ├── benchmark_headless.py   # Benchmark sans affichage
+│   └── benchmark_results.csv   # Résultats expérimentaux
+│
+└── tp5/
+    ├── TP5_Rapport.md          # Rapport complet TP5
+    ├── TP5_LIANG_Tianyi.ipynb   # Notebook Colab exécuté
+    ├── TP_numero_cinq.ipynb     # Notebook original du cours
+    └── test_numba/              # Exemples Numba (préparation exam)
 ```
 
 ---
@@ -126,6 +133,19 @@ travaux_diriges/
 - Communication (ghost + Gatherv) domine à 8 workers (54% du temps total)
 - Le ratio calcul/communication limite l'efficacité sur petites grilles
 
+### TP5 : Calcul GPU avec PyCUDA
+
+**Objectifs :**
+- Programmer des kernels CUDA en Python via PyCUDA sur Google Colab (Tesla T4)
+- Comprendre l'indexation des threads et blocs CUDA (1D et 2D)
+- Comparer les performances CPU (NumPy) vs GPU (CUDA)
+
+**Résultats clés :**
+- Addition vectorielle (N=10M) : **speedup 33.64×**
+- Mandelbrot (1000×1000, 100 itérations) : **speedup 5235×**
+- Mandelbrot haute résolution (4000×4000, 200 itérations) : **speedup 13 497×**
+- Le speedup GPU/CPU augmente avec la taille du problème (paradigme SIMT)
+
 ---
 
 ## 🛠️ Environnement de développement
@@ -169,6 +189,13 @@ mpirun -np 4 python3 tp4/game_of_life.py glider_gun
 mpirun -np 4 python3 tp4/benchmark_headless.py --steps 5000 --pattern block_switch_engine
 ```
 
+### TP5 (Python/PyCUDA — Google Colab)
+```bash
+# Exécuter le notebook TP5_LIANG_Tianyi.ipynb sur Google Colab
+# Prérequis : activer le runtime GPU (Tesla T4)
+# Le notebook installe PyCUDA automatiquement via pip
+```
+
 ---
 
 ## 📊 Résultats expérimentaux
@@ -178,6 +205,7 @@ Les résultats détaillés sont disponibles dans chaque rapport :
 - [Résultats TP2](tp2/TP2_Rapport.md#résultats-expérimentaux)
 - [Résultats TP3](tp3/TP3_Rapport.md#résultats-expérimentaux)
 - [Résultats TP4](tp4/TP4_Rapport.md#3-résultats-expérimentaux)
+- [Résultats TP5](tp5/TP5_Rapport.md)
 
 ---
 
