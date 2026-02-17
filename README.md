@@ -14,6 +14,7 @@
 | [TP1](tp1/) | Produit matrice-matrice & Parallélisation OpenMP | C++, OpenMP, BLAS | [TP1_Rapport.md](tp1/TP1_Rapport.md) |
 | [TP2](tp2/) | Parallélisation MPI : Mandelbrot & Produit matrice-vecteur | Python, MPI, mpi4py | [TP2_Rapport.md](tp2/TP2_Rapport.md) |
 | [TP3](tp3/) | Bucket Sort Parallèle avec MPI | C++, MPI | [TP3_Rapport.md](tp3/TP3_Rapport.md) |
+| [TP4](tp4/) | Jeu de la Vie — Parallélisation MPI | Python, MPI, mpi4py, pygame | [TP4_Rapport.md](tp4/TP4_Rapport.md) |
 
 ---
 
@@ -48,16 +49,23 @@ travaux_diriges/
 │   ├── plots/                  # Graphiques de performance
 │   └── results/                # Résultats expérimentaux
 │
-└── tp3/
-    ├── TP3_Rapport.md          # Rapport complet TP3
-    ├── README.md               # Énoncé et instructions
-    ├── sources/                # Code source C++
-    │   ├── bucket_sort_seq.cpp     # Version séquentielle
-    │   ├── bucket_sort_mpi.cpp     # Version parallèle MPI
-    │   ├── Makefile                # Compilation
-    │   └── run_experiments.sh      # Script d'automatisation
-    ├── results/                # Résultats expérimentaux
-    └── images/                 # Illustrations du cours
+├── tp3/
+│   ├── TP3_Rapport.md          # Rapport complet TP3
+│   ├── README.md               # Énoncé et instructions
+│   ├── sources/                # Code source C++
+│   │   ├── bucket_sort_seq.cpp     # Version séquentielle
+│   │   ├── bucket_sort_mpi.cpp     # Version parallèle MPI
+│   │   ├── Makefile                # Compilation
+│   │   └── run_experiments.sh      # Script d'automatisation
+│   ├── results/                # Résultats expérimentaux
+│   └── images/                 # Illustrations du cours
+│
+└── tp4/
+    ├── TP4_Rapport.md          # Rapport complet TP4
+    ├── game_of_life.py         # Jeu de la Vie parallèle (MPI)
+    ├── game_of_life_parallel.py # Copie identique
+    ├── benchmark_headless.py   # Benchmark sans affichage
+    └── benchmark_results.csv   # Résultats expérimentaux
 ```
 
 ---
@@ -104,6 +112,20 @@ travaux_diriges/
 - **Merge k-way** avec heap pour fusionner les listes triées
 - Analyse de performance et scalabilité
 
+### TP4 : Jeu de la Vie — Parallélisation MPI
+
+**Objectifs :**
+- Paralléliser l'automate cellulaire « Game of Life » sur grille torique
+- Implémenter la décomposition de domaine par bandes horizontales
+- Gérer l'échange de cellules fantômes (ghost cells) entre processus
+- Séparer contrôleur (affichage) et workers (calcul)
+
+**Résultats clés :**
+- Vectorisation (`np.roll`) vs boucles Python : **accélération ~137×**
+- Parallèle (grille 400×400, 5000 itérations) : speedup max **1.61×** avec 4 workers
+- Communication (ghost + Gatherv) domine à 8 workers (54% du temps total)
+- Le ratio calcul/communication limite l'efficacité sur petites grilles
+
 ---
 
 ## 🛠️ Environnement de développement
@@ -138,6 +160,15 @@ make all
 mpirun -np 4 ./bucket_sort_mpi.exe 1000000       # Version parallèle
 ```
 
+### TP4 (Python/MPI/pygame)
+```bash
+# Simulation avec affichage (1 controller + 3 workers)
+mpirun -np 4 python3 tp4/game_of_life.py glider_gun
+
+# Benchmark headless
+mpirun -np 4 python3 tp4/benchmark_headless.py --steps 5000 --pattern block_switch_engine
+```
+
 ---
 
 ## 📊 Résultats expérimentaux
@@ -146,6 +177,7 @@ Les résultats détaillés sont disponibles dans chaque rapport :
 - [Résultats TP1](tp1/TP1_Rapport.md#résultats)
 - [Résultats TP2](tp2/TP2_Rapport.md#résultats-expérimentaux)
 - [Résultats TP3](tp3/TP3_Rapport.md#résultats-expérimentaux)
+- [Résultats TP4](tp4/TP4_Rapport.md#3-résultats-expérimentaux)
 
 ---
 
@@ -157,4 +189,4 @@ Les résultats détaillés sont disponibles dans chaque rapport :
 
 ---
 
-*Dernière mise à jour : Janvier 2026*
+*Dernière mise à jour : Février 2026*
